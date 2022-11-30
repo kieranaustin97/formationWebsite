@@ -37,15 +37,18 @@ function drop(ev) {
 
 //Set size of HTML grid
 window.onload = function(){
-    var box_width = (window.innerWidth - 40)/12;
-    var box_height = (window.innerHeight - 100)/12;
+    var box_width = (window.innerWidth - 40)/15;
+    var box_height = (window.innerHeight - 100)/13;
     var columnWidthString = ""
     var columnHeightString = ""
 
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 15; i++) {
             columnWidthString += box_width-7.5 + "px "
-            columnHeightString += box_height + "px "
         }
+        
+    for (let i = 0; i < 13; i++) {
+        columnHeightString += box_height + "px "
+    }
 
     document.getElementById("drawnGrid").style.gridTemplateColumns = columnWidthString;
     document.getElementById("drawnGrid").style.gridTemplateRows = columnHeightString;
@@ -56,15 +59,29 @@ window.onload = function(){
 const gridDrawing = document.getElementById("drawnGrid");
 
 let htmlString = "";
-for (let i = 0; i < 144; i++) {
-    htmlString += '<div ondrop="drop(event)" ondragover="allowDrop(event)" class="grid-item"></div>'
+for (let i = 0; i < 195; i++) {
+    htmlString += '<div id=gridBox' + i + ' ondrop="drop(event)" ondragover="allowDrop(event)" class="grid-item"></div>'
 }
-
 gridDrawing.innerHTML = htmlString;
 
-//Create new players
+//Create End Zone
+for (let i = 0; i <=14; i++) {
+    document.getElementById('gridBox' + i).className += (" end-zone");
+    document.getElementById('gridBox' + (194-i)).className += (" scrimmage-line");
+};
+//Create Pitch Lines
+for (let i = 15; i < 195; i += 15) {
+    document.getElementById('gridBox' + i).className += (" left-border");
+    document.getElementById('gridBox' + (i + 14)).className += (" right-border");
+    document.getElementById('gridBox' + (i + 3)).className += (" right-border");
+    document.getElementById('gridBox' + (i + 4)).className += (" left-border");
+    document.getElementById('gridBox' + (i + 10)).className += (" right-border");
+    document.getElementById('gridBox' + (i + 11)).className += (" left-border");
+};
 
-var playerCounter = 1
+
+//Create new players
+var playerCounter = 1;
 
 function new_blocker(player_type) {
     var img = document.createElement('img');
